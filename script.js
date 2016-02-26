@@ -1,10 +1,10 @@
-//Trucks JSON data
+//Trucks JSON Data
 var trucksJSON = {
 	trucks: [
 		{
 			name: "Truck 1",
 			position: {
-				lat: 32.59,
+				lat: 33.59,
 				lng: -116.0
 			}
 		},
@@ -28,7 +28,50 @@ var trucksJSON = {
 				lat: 35.59,
 				lng: -116.0
 			}
+		},
+		{
+			name: "Truck 5",
+			position: {
+				lat: 34.59,
+				lng: -116.0
+			}
+		},
+		{
+			name: "Truck 6",
+			position: {
+				lat: 35.59,
+				lng: -116.5
+			}
+		},
+		{
+			name: "Truck 7",
+			position: {
+				lat: 33.59,
+				lng: -116.5
+			}
+		},
+		{
+			name: "Truck 8",
+			position: {
+				lat: 35.0,
+				lng: -116.0
+			}
+		},
+		{
+			name: "Truck 9",
+			position: {
+				lat: 34.0,
+				lng: -116.3
+			}
+		},
+		{
+			name: "Truck 10",
+			position: {
+				lat: 34.5,
+				lng: -116.7
+			}
 		}
+
 	]
 };
 
@@ -39,12 +82,12 @@ var markers = [];
 
 function initialize() {
 	var mapjson = {
-		center:new google.maps.LatLng(33.59,-117.0),
+		center:new google.maps.LatLng(34.59,-117.0),
 		zoom:7,
 		mapTypeId:google.maps.MapTypeId.ROADMAP
 	};
 	map=new google.maps.Map(document.getElementById("googleMap"),mapjson);
-	var myLatlng = new google.maps.LatLng(33.59,-117.0);
+	var myLatlng = new google.maps.LatLng(34.0,-117.0);
 	var image ="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
 
 	for (var i = 0; i < trucksJSON.trucks.length; i++) {
@@ -61,6 +104,8 @@ function initialize() {
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
+// Panning based on movement of markers
+
 function recenterMapBasedOnMarkers() {
   	var bounds = new google.maps.LatLngBounds();
   	for (var i = 0; i < markers.length; i++) {
@@ -68,10 +113,10 @@ function recenterMapBasedOnMarkers() {
   	}
   	map.fitBounds(bounds);
 }
-
+// Randomly updating position of trucksJSON object
 function updateTrucksJSON() {
 	var truckStatusString = "";
-	for (var idx = 0, length = trucksJSON.trucks.length / 2; idx < length; idx++) {
+	for (var idx = 0, length = trucksJSON.trucks.length / 2 ; idx < length+1; idx++) {
 		var randomTruckIdx = parseInt(Math.random() * (trucksJSON.trucks.length - 0) + 0);
 		var currentPosition = trucksJSON.trucks[randomTruckIdx].position;
 		currentPosition.lat = currentPosition.lat + 1;
@@ -80,6 +125,7 @@ function updateTrucksJSON() {
 	}
 	document.getElementById("truckChangeStatus").innerHTML = truckStatusString;
 }
+// Updating google maps 
 function updatePosition(){
 	updateTrucksJSON();
 
@@ -91,7 +137,7 @@ function updatePosition(){
 	recenterMapBasedOnMarkers();
 	updateTrucksJSONOnDOM();
 }
-
+// Live update of changing locations in the screen
 function updateTrucksJSONOnDOM() {
 	document.getElementById("trucksJSONData").innerHTML = JSON.stringify(trucksJSON);
 }
