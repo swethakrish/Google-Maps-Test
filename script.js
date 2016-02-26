@@ -1,3 +1,4 @@
+//Trucks JSON data
 var trucksJSON = {
 	trucks: [
 		{
